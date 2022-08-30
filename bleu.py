@@ -150,3 +150,5 @@ q=[
     "What can people do about the expected impacts of global warming?",
     "Do solar storms cause heat waves on Earth?"
 ]
+
+print (bleu(data,ref))
