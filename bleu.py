@@ -56,7 +56,7 @@ data=[
 "Please wait while I examine billions of data points regarding the volume of carbon in the Earth's atmosphere. It will take a few seconds.A new addition just in -- Roger Pielke Sr. : Mail from a NOAH ad hoc interlocutor Hi Gordon Here is something that came to my attention. A comment on one of Michaels articles \"The Fall of the Heretics at Realclimate\" which included Steve McIntyre, Karl and Peter Thorne. This is odd but I have observed, since Al Teller and more particularly the Reagan administration, that men using the label of 'conservative' maintain the talking points of someone called 'Fiona Fox'. (From http://scienceblogs.com/pureillusion/2010/04/the_fall_of_the_heresy.php) I think this is Kim Monfort, who runs with Ann Coulter and all the rest. Of course, Fox stands for Food and Environment Research, one of the original think tanks that has morphed",
 "There have been about 5 major warm periods during the past 3 to 5 million years. During each of these warm periods, sudden (10 to 100 years) increases in global temperatures of 4 to 5°C (7° to 9°F) occurred.All of them were associated with increases of the atmospheric carbon dioxide concentration. And all the temperature increase occurred before the carbon dioxide increase.Atmospheric carbon dioxide concentrations have been increasing since the 1700s. Over the same time period, global air temperatures have also been increasing.Source: http://www.climatechange.noaa.gov/Answers like this should be readily off the cuff for a bot that posts on Twitter. The Science Party understands that our claims that the current rate of warming has no precedent have been a pitfall in public perception. If a phrase can be misinterpreted, it will be. There is simply no substitute for accurate and plain speaking, and that is our focus in spru",
 "Climate Change Science. Climate Change Science Products and Services Informationhttps://www.climate.gov/about/chatbots/So I looked, and it is impossible to find the phrase \"climate science\". The description of the department's purposes mentions \"our role in the worldwide scientific community\" but not what they are actually doing when they engage with that community. They engage in general climate sciences, but not in climate science.",
-"Sorry, I did not get that. Can you rephrase that please?"
+"Sorry, I did not get that. Can you rephrase that please?",
 "It is important for people to learn about climate change. And we should use less energy.",
 "Will a solar impact on Interplanetary Magnetic Field always give impact on a Global Greenhouse Warming?"
 
@@ -150,5 +150,22 @@ q=[
     "What can people do about the expected impacts of global warming?",
     "Do solar storms cause heat waves on Earth?"
 ]
+import pyter
 
-print (bleu(data,ref))
+def ter(ref, gen):
+    '''
+    Args:
+        ref - reference sentences - in a list
+        gen - generated sentences - in a list
+    Returns:
+        averaged TER score over all sentence pairs
+    '''
+    if len(ref) == 1:
+        total_score =  pyter.ter(gen[0].split(), ref[0].split())
+    else:
+        total_score = 0
+        for i in range(len(gen)):
+            total_score = total_score + pyter.ter(gen[i].split(), ref[i].split())
+        total_score = total_score/len(gen)
+    return total_score
+print (bleu(data,ref),ter(data,ref)) #0.009397642369000857 1.685649857165352
