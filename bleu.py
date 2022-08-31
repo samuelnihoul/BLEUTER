@@ -17,8 +17,12 @@ def bleu(ref, gen):
     for i,l in enumerate(ref):
         ref_bleu.append([l.split()])
     cc = SmoothingFunction()
-    score_bleu = corpus_bleu(ref_bleu, gen_bleu, weights=(0, 1, 0, 0), smoothing_function=cc.method4)
-    return score_bleu
+    score_bleu =corpus_bleu(ref_bleu, gen_bleu, weights=(1,1,1,1), smoothing_function=cc.method4)
+    n1=corpus_bleu(ref_bleu, gen_bleu, weights=(1,0,0,0), smoothing_function=cc.method4)
+    n2=corpus_bleu(ref_bleu, gen_bleu, weights=(0,1,0,0), smoothing_function=cc.method4)
+    n3=corpus_bleu(ref_bleu, gen_bleu, weights=(0,0,1,0), smoothing_function=cc.method4)
+    n4=corpus_bleu(ref_bleu, gen_bleu, weights=(0,0,0,1), smoothing_function=cc.method4)
+    return score_bleu,n1,n2,n3,n4
 
 data=[
 
@@ -168,4 +172,4 @@ def ter(ref, gen):
             total_score = total_score + pyter.ter(gen[i].split(), ref[i].split())
         total_score = total_score/len(gen)
     return total_score
-print (bleu(data,ref),ter(data,ref)) #0.009397642369000857 1.685649857165352
+print (bleu(data,ref),ter(data,ref))#(1.1810356102394466e-09, 0.08517722960105682, 0.009397642369000857, 0.0004637398685356634, 0.0003367208063110882) 1.685649857165352 
